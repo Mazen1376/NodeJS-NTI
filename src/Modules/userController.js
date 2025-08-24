@@ -10,6 +10,12 @@ const getUsers = async (req,res)=>{                               //token to che
     res.json(users)
 }
 
+const getUserProfile = async (req,res)=>{
+    const id = req.decoded._id
+    const userProfile = await userModel.findById(id).select('-_id -isAdmin -password')
+    res.json(userProfile)
+}
+
 const register =  async (req,res)=>{
 
     const exist = await userModel.findOne({email:req.body.email})
@@ -66,6 +72,7 @@ const deleteUser = async(req,res)=>{                                    //token 
 
 
 export {
+    getUserProfile,
     register, 
     login,
     updateUser,

@@ -1,8 +1,14 @@
 import jwt from 'jsonwebtoken'
 import { productModel } from '../db/models/productModel.js'
 
-const getProducts = async (req,res)=>{                               //token to check if role : admin
+const getProducts = async (req,res)=>{
     const products = await productModel.find()
+    res.json(products)
+}
+
+const getProduct = async (req,res)=>{
+    const {id} = req.params
+    const products = await productModel.findById(id)
     res.json(products)
 }
 
@@ -22,15 +28,16 @@ const updateProduct =  async (req,res)=>{
     res.json({ message: "updated successfully" , updatedProduct})
 }
 
-const deleteProduct = async(req,res)=>{                                    //token to check if role : admin
-     let {id}= req.params
+const deleteProduct = async(req,res)=>{
+     const {id} = req.params
      const deletedProduct = await productModel.findByIdAndDelete(id)
       res.json({message:"deleted successfully", deletedProduct})
 }
 
 
 export {
-    getProducts, 
+    getProducts,
+    getProduct, 
     addProduct,
     updateProduct,
     deleteProduct

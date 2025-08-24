@@ -1,12 +1,14 @@
 import { Router } from "express";
 import express from 'express'
-import { deleteUser, getUsers, login, register, updateUser, verifyEmail } from "./userController.js";
+import { deleteUser, getUserProfile, getUsers, login, register, updateUser, verifyEmail } from "./userController.js";
 import { verifyAdminToken } from "../middleware/verifyAdminToken.js";
+import { verifyUserToken } from "../middleware/verifyCartToken.js";
 
 export const userRoutes = Router()
 
 userRoutes.use(express.json())
 
+userRoutes.get('/users/profile', verifyUserToken, getUserProfile)
 userRoutes.post('/users/register', register)
 userRoutes.post('/users/login', login)
 userRoutes.get('/users/verify/:email', verifyEmail)

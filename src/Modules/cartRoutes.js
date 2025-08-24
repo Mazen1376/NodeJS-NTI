@@ -1,18 +1,20 @@
 import { Router } from "express";
 import express from 'express'
-import { addToCart, createOrder, decrementFromCart, deleteFromCart, getUserCart } from "./cartController.js";
-import { verifyingCartToken } from "../middleware/verifyCartToken.js";
+import { addToCart, createOrder, decrementFromCart, deleteFromCart, getAllCarts, getUserCart } from "./cartController.js";
+import { verifyUserToken } from "../middleware/verifyCartToken.js";
 
 export const cartRoutes = Router()
 
 cartRoutes.use(express.json())
 
-cartRoutes.get('/cart',verifyingCartToken ,getUserCart)
+cartRoutes.get('/cart',verifyUserToken ,getUserCart)
 
-cartRoutes.post('/cart/:id', verifyingCartToken, addToCart)
+cartRoutes.post('/cart/:id', verifyUserToken, addToCart)
 
-cartRoutes.delete('/cart/:id', verifyingCartToken, deleteFromCart)
+cartRoutes.post('/decrementFromCart/:id', verifyUserToken, decrementFromCart) 
 
-cartRoutes.post('/createOrder', verifyingCartToken, createOrder) 
+cartRoutes.post('/createOrder', verifyUserToken, createOrder) ///////////////////////////////////////////
 
-cartRoutes.post('/decrementFromCart/:id', verifyingCartToken, decrementFromCart) 
+cartRoutes.delete('/cart/:id', verifyUserToken, deleteFromCart)
+
+cartRoutes.get('/carts',verifyUserToken ,getAllCarts)

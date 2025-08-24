@@ -1,12 +1,19 @@
 import { cartModel } from '../db/models/cartModel.js'
 import { orderModel } from '../db/models/orderModel.js'
 import { productModel } from '../db/models/productModel.js'
+import { userModel } from '../db/models/userModel.js'
 
 
 const getUserCart = async (req,res)=>{
 
         const userCart = await cartModel.findOne({userId: req.decoded._id})
         res.json({message:"ur cart", userCart})
+    }
+
+const getAllCarts = async (req,res)=>{
+
+        const carts = await cartModel.find()
+        res.json({message:"all carts", carts})
     }
 
 const addToCart =  async (req,res)=>{
@@ -70,6 +77,7 @@ const createOrder = async (req, res) => {
 
 export{
     getUserCart,
+    getAllCarts,
     addToCart,
     decrementFromCart,
     deleteFromCart,
